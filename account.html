@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BW | Аккаунт</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Ubuntu:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #55ff55;
+            --accent: #bb86fc;
+            --glass: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Ubuntu', sans-serif;
+            background: linear-gradient(-45deg, #0f0c29, #302b63, #24243e, #6a11cb, #2575fc);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: white;
+            min-height: 100vh;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .pixel-font { font-family: 'Press+Start+2P', cursive; font-size: 0.8em; }
+
+        nav {
+            background: rgba(0,0,0,0.3);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        nav a { color: white; text-decoration: none; font-size: 0.7em; }
+
+        .container { display: flex; justify-content: center; align-items: center; padding: 40px 20px; }
+
+        .edit-card {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 40px;
+            width: 100%;
+            max-width: 450px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            text-align: center;
+        }
+
+        .input-box { margin-bottom: 20px; text-align: left; }
+        label { display: block; color: var(--accent); font-size: 0.8em; margin-bottom: 10px; }
+        
+        input {
+            width: 100%;
+            padding: 12px;
+            background: rgba(0,0,0,0.4);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            color: white;
+            box-sizing: border-box;
+        }
+
+        .btn-save {
+            width: 100%;
+            padding: 15px;
+            background: var(--primary);
+            color: black;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="pixel-font">
+        <a href="index.html">ГЛАВНАЯ</a>
+        <a href="dukomintation.html">ДОКУМЕНТАЦИЯ</a>
+        <a href="account.html" style="color: var(--primary);">АККАУНТ</a>
+    </nav>
+
+    <div class="container">
+        <div class="edit-card">
+            <h2 class="pixel-font">ПРОФИЛЬ</h2>
+            <div class="input-box">
+                <label>НИКНЕЙМ</label>
+                <input type="text" id="edit-nick">
+            </div>
+            <div class="input-box">
+                <label>EMAIL</label>
+                <input type="email" id="edit-email">
+            </div>
+            <button class="btn-save pixel-font" onclick="saveChanges()">СОХРАНИТЬ</button>
+            <p id="status" style="display:none; color: var(--primary); margin-top:15px;">✓ Сохранено везде!</p>
+        </div>
+    </div>
+
+    <script>
+        window.onload = function() {
+            const nick = localStorage.getItem('bw_nick');
+            const email = localStorage.getItem('bw_email');
+            if (nick && email) {
+                document.getElementById('edit-nick').value = nick;
+                document.getElementById('edit-email').value = email;
+            } else { window.location.href = 'index.html'; }
+        };
+
+        function saveChanges() {
+            const newNick = document.getElementById('edit-nick').value;
+            const newEmail = document.getElementById('edit-email').value;
+            localStorage.setItem('bw_nick', newNick);
+            localStorage.setItem('bw_email', newEmail);
+            document.getElementById('status').style.display = 'block';
+            setTimeout(() => { document.getElementById('status').style.display = 'none'; }, 2000);
+        }
+    </script>
+</body>
+</html>
